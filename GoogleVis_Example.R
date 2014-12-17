@@ -1,10 +1,33 @@
 ## Please note that by default the googleVis plot command
 ## will open a browser window and requires Flash and Internet
 ## connection to display the visualisation.
+require(googleVis)
 
-Fruits    
+con <- dbConnect(drv, dbname="postgres", host ="localhost", port=5432, user="postgres", password="Exc!te")
+rd <- dbGetQuery(con, "select * from Excite_ESA")
+   
+Pie1 <- gvisPieChart(Excite)
+plot(Pie1)
+
+## Doughnut chart - a pie with a hole
+Pie2 <- gvisPieChart(CityPopularity, options=list(
+  slices="{4: {offset: 0.2}, 0: {offset: 0.3}}",
+  title='City popularity',
+  legend='none',
+  pieSliceText='label',
+  pieHole=0.5))
+plot(Pie2)
+
+
+
+
+
+
+
+
+
 ## timevar Year
-M1 <- gvisMotionChart(Fruits, idvar="Fruit", timevar="Year")
+M1 <- gvisMotionChart(rd, idvar="team_name", timevar="id")
 str(M1)
 ## print.gvis, will concatenate the list into a one long string
 M1
